@@ -3,3 +3,7 @@ function Get-ShutdownReason {
     Write-Host "Message:" $event.Message
     Write-Host " Date:" $event.TimeCreated
 }
+
+function Get-IP {
+    Write-Host (Invoke-WebRequest -Uri https://wtfismyip.com/text).Content.Trim()
+}
