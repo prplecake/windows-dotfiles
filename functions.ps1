@@ -21,7 +21,7 @@ function Monitor-HttpHost {
     Write-Host "Monitoring host $Uri at an internal of $SleepSeconds seconds."
     while($true){
         try {
-            $req = Invoke-WebRequest -Uri https://dev.fortressmedical.com
+            $req = Invoke-WebRequest -Uri https://dev.fortressmedical.com -DisableKeepAlive
             Write-Host $req.StatusCode
         } catch {
             Write-Host "Could not connect."
