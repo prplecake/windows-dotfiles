@@ -1,5 +1,5 @@
 function Get-ShutdownReason {
-    $event = Get-WinEvent -LogName 'System' | ?{ $_.ID -eq 1074}
+    $event = Get-WinEvent -LogName 'System' | ?{ $_.ID -eq 1074} | Select -First 1
     Write-Host "Message:" $event.Message
     Write-Host " Date:" $event.TimeCreated
 }
