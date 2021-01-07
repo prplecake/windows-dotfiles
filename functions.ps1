@@ -29,3 +29,7 @@ function Monitor-HttpHost {
         Start-Sleep -Seconds $SleepSeconds
     }
 }
+
+function List-EmptyDirs {
+    (gci -r | ?{$_.PSIsContainer -eq $true}) | ?{$_.GetFileSystemInfos().Count -eq 0} | Select FullName
+}
