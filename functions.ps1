@@ -26,6 +26,6 @@ function Monitor-HttpHost {
         } catch {
             Write-Host "Could not connect."
         }
-        Start-Sleep -Seconds 15
+        Start-Sleep -Seconds $SleepSeconds
     }
 }
