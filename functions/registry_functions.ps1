@@ -74,3 +74,8 @@ function Add-SublimeMergeContextMenu {
 
     Remove-PSDrive HKCR
 }
+
+function Add-SublimeContextMenus {
+    Add-SublimeMergeContextMenu
+    Add-SublimeTextContextMenu
+}
