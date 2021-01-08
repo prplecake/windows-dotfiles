@@ -12,3 +12,65 @@ function Enable-ShakeToMinimize {
     New-ItemProperty -LiteralPath $registryPath -Name $name -Value $value -PropertyType DWORD -Force | Out-Null
     Write-Host "Shake to Minimize enabled."
 }
+
+function Add-SublimeTextContextMenu {
+    New-PSDrive -Name HKCR -PSProvider Registry -Root HKEY_CLASSES_ROOT | Out-Null
+    $st3Path = "C:\Program Files\Sublime Text 3\sublime_text.exe"
+
+    # Add for all file types
+    $path = "HKCR:\*\shell\Open with Sublime Text"
+    New-Item -Path "$path" -Force | Out-Null
+    New-ItemProperty -LiteralPath "$path" -Name "(Default)" -Value "Open with Sublime Text 3" -PropertyType String -Force | Out-Null
+    New-ItemProperty -LiteralPath "$path" -Name "Icon" -Value "$st3Path,0" -PropertyType ExpandString -Force | Out-Null
+    New-Item -Path "$path\command" -Force | Out-Null
+    New-ItemProperty -LiteralPath "$path\command" -Name "(Default)" -Value "$st3Path `"%1`"" -PropertyType String -Force | Out-Null
+
+    # Add for folders
+    $path = "HKCR:\Directory\shell\Open with Sublime Text"
+    New-Item -Path "$path" -Force | Out-Null
+    New-ItemProperty -LiteralPath "$path" -Name "(Default)" -Value "Open with Sublime Text 3" -PropertyType String -Force | Out-Null
+    New-ItemProperty -LiteralPath "$path" -Name "Icon" -Value "$st3Path,0" -PropertyType ExpandString -Force | Out-Null
+    New-Item -Path "$path\command" -Force | Out-Null
+    New-ItemProperty -LiteralPath "$path\command" -Name "(Default)" -Value "$st3Path `"%1`"" -PropertyType ExpandString -Force | Out-Null
+
+    # Add for inside folders
+    $path = "HKCR:\Directory\Background\shell\Open with Sublime Text"
+    New-Item -Path "$path" -Force | Out-Null
+    New-ItemProperty -LiteralPath "$path" -Name "(Default)" -Value "Open with Sublime Text 3" -PropertyType String -Force | Out-Null
+    New-ItemProperty -LiteralPath "$path" -Name "Icon" -Value "$st3Path,0" -PropertyType ExpandString -Force | Out-Null
+    New-Item -Path "$path\command" -Force | Out-Null
+    New-ItemProperty -LiteralPath "$path\command" -Name "(Default)" -Value "$st3Path `"%V`"" -PropertyType String -Force | Out-Null
+
+    Remove-PSDrive HKCR
+}
+
+function Add-SublimeMergeContextMenu {
+    New-PSDrive -Name HKCR -PSProvider Registry -Root HKEY_CLASSES_ROOT | Out-Null
+    $smPath = "C:\Program Files\Sublime Merge\sublime_merge.exe"
+
+    # Add for all file types
+    $path = "HKCR:\*\shell\Open with Sublime Merge"
+    New-Item -Path "$path" -Force | Out-Null
+    New-ItemProperty -LiteralPath "$path" -Name "(Default)" -Value "Open with Sublime Merge" -PropertyType String -Force | Out-Null
+    New-ItemProperty -LiteralPath "$path" -Name "Icon" -Value "$smPath,0" -PropertyType ExpandString -Force | Out-Null
+    New-Item -Path "$path\command" -Force | Out-Null
+    New-ItemProperty -LiteralPath "$path\command" -Name "(Default)" -Value "$smPath `"%1`"" -PropertyType String -Force | Out-Null
+
+    # Add for folders
+    $path = "HKCR:\Directory\shell\Open with Sublime Merge"
+    New-Item -Path "$path" -Force | Out-Null
+    New-ItemProperty -LiteralPath "$path" -Name "(Default)" -Value "Open with Sublime Merge" -PropertyType String -Force | Out-Null
+    New-ItemProperty -LiteralPath "$path" -Name "Icon" -Value "$smPath,0" -PropertyType ExpandString -Force | Out-Null
+    New-Item -Path "$path\command" -Force | Out-Null
+    New-ItemProperty -LiteralPath "$path\command" -Name "(Default)" -Value "$smPath `"%1`"" -PropertyType ExpandString -Force | Out-Null
+
+    # Add for inside folders
+    $path = "HKCR:\Directory\Background\shell\Open with Sublime Merge"
+    New-Item -Path "$path" -Force | Out-Null
+    New-ItemProperty -LiteralPath "$path" -Name "(Default)" -Value "Open with Sublime Merge" -PropertyType String -Force | Out-Null
+    New-ItemProperty -LiteralPath "$path" -Name "Icon" -Value "$smPath,0" -PropertyType ExpandString -Force | Out-Null
+    New-Item -Path "$path\command" -Force | Out-Null
+    New-ItemProperty -LiteralPath "$path\command" -Name "(Default)" -Value "$smPath `"%V`"" -PropertyType String -Force | Out-Null
+
+    Remove-PSDrive HKCR
+}
