@@ -21,7 +21,7 @@ Message: The process C:\WINDOWS\system32\svchost.exe (DELL-P7520-1) has initiate
 
 **Add Sublime {Text 3,Merge} Context Menu Items**
 
-![Sublime Context Menu Items](https://drop.jrgnsn.net/zJEY.png)
+![Sublime Context Menu Items](https://drop.jrgnsn.net/oqlX.png)
 
 ```powershell
 Add-SublimeMergeContextMenu
