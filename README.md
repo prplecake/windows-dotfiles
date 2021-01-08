@@ -18,3 +18,12 @@ Message: The process C:\WINDOWS\system32\svchost.exe (DELL-P7520-1) has initiate
  Comment:
  Date: 2020-10-30 19:43:02
 ```
+
+**Add Sublime {Text 3,Merge} Context Menu Items**
+
+![Sublime Context Menu Items](https://drop.jrgnsn.net/zJEY.png)
+
+```powershell
+Add-SublimeMergeContextMenu
+Add-SublimeTextContextMenu
+```
