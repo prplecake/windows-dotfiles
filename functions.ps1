@@ -35,3 +35,23 @@ function Monitor-HttpHost {
 function List-EmptyDirs {
     (gci -r | ?{$_.PSIsContainer -eq $true}) | ?{$_.GetFileSystemInfos().Count -eq 0} | Select FullName
 }
+
+function Get-SIDFromName {
+    Param(
+        [Parameter(Mandatory=$true,Position=0)]
+        [string]$Name
+    )
+    $objUser = New-Object System.Security.Principal.NTAccount($Name)
+    $objSID = $objUser.Translate([System.Security.Principal.SecurityIdentifier])
+    Write-Host "Resolved user's SID: " $objSID.Value
+}
+
+function Get-NameFromSID {
+    Param(
+        [Parameter(Mandatory=$true,Position=0)]
+        [string]$SID
+    )
+    $objSID = New-Object System.Security.Principal.SecurityIdentifier($SID)
+    $objUser = $objSID.Translate([System.Security.Principal.NTAccount])
+    Write-Host "Resolved user name: " $objUser.Value
+}
