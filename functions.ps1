@@ -7,7 +7,7 @@ function Get-ShutdownReason {
 }
 
 function Get-IP {
-    Write-Host (Invoke-WebRequest -Uri https://wtfismyip.com/text).Content.Trim()
+    Write-Host (Invoke-WebRequest -Uri "https://wtfismyip.com/text").Content.Trim()
 }
 
 function Monitor-HttpHost {
