@@ -55,3 +55,11 @@ function Get-NameFromSID {
     $objUser = $objSID.Translate([System.Security.Principal.NTAccount])
     Write-Host "Resolved user name: " $objUser.Value
 }
+
+function Get-AwsSesSendQuota {
+    $result = (aws ses get-send-quota)
+    $obj = $result | ConvertFrom-Json
+
+    Write-Host "Sent last 24 hours: " $obj.SentLast24Hours
+    Write-Host "Quota used (%): " $($obj.SentLast24Hours / $obj.Max24HourSend * 100)
+}
