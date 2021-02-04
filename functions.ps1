@@ -70,5 +70,5 @@ function Get-AwsSesSendQuota {
         QuotaUsed = $quotaPercent
     }
 
-    $objReturn | Select -Property SendingEnabled,SentLast24Hours,QuotaUsed | fl
+    $objReturn
 }
