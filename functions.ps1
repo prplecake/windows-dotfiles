@@ -57,9 +57,18 @@ function Get-NameFromSID {
 }
 
 function Get-AwsSesSendQuota {
-    $result = (aws ses get-send-quota)
-    $obj = $result | ConvertFrom-Json
+    $resQuota = $(aws ses get-send-quota)
+    $resSendingEnabled = $(aws ses get-account-sending-enabled)
+    $objQuota = $resQuota | ConvertFrom-Json
+    $objSendingEnabled = $resSendingEnabled | ConvertFrom-Json
 
-    Write-Host "Sent last 24 hours: " $obj.SentLast24Hours
-    Write-Host "Quota used (%): " $($obj.SentLast24Hours / $obj.Max24HourSend * 100)
+    $quotaPercent = $($objQuota.SentLast24Hours / $objQuota.Max24HourSend * 100)
+
+    $objReturn = New-Object -TypeName PSObject -Property @{
+        SendingEnabled = $objSendingEnabled.Enabled
+        SentLast24Hours = $objQuota.SentLast24Hours
+        QuotaUsed = $quotaPercent
+    }
+
+    $objReturn | Select -Property SendingEnabled,SentLast24Hours,QuotaUsed | fl
 }
