@@ -73,6 +73,23 @@ function Get-AwsSesSendQuota {
     $objReturn
 }
 
+function Get-AwsSendStatistics {
+    Param(
+        [Parameter(Mandatory=$false)]
+        [switch]$Sorted
+        )
+
+    $resSendStatistics = $($(aws ses get-send-statistics) | ConvertFrom-Json).SendDataPoints
+
+    if ($Sorted) {
+        $resSendStatistics | Sort-Object -Property Timestamp | ft
+    } else {
+        $resSendStatistics
+    }
+
+
+}
+
 function Play-StarWarsTheme {
     [console]::beep(440,500)
     [console]::beep(440,500)
