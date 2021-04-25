@@ -16,19 +16,30 @@ function Monitor-HttpHost {
         [string]$Uri,
 
         [Parameter(Mandatory=$false)]
-        [int]$SleepSeconds = 15
+        [int]$SleepSeconds = 15,
+
+        [Parameter(Mandatory=$false)]
+        [switch]$Once
     )
 
-
-    Write-Host "Monitoring host $Uri at an internal of $SleepSeconds seconds."
-    while($true){
+    if ($Once) {
         try {
             $req = Invoke-WebRequest -Uri $Uri -DisableKeepAlive
             Write-Host $req.StatusCode
         } catch {
             Write-Host "Could not connect. $($Error[0])"
         }
-        Start-Sleep -Seconds $SleepSeconds
+    } else {
+        Write-Host "Monitoring host $Uri at an internal of $SleepSeconds seconds."
+        while($true){
+            try {
+                $req = Invoke-WebRequest -Uri $Uri -DisableKeepAlive
+                Write-Host $req.StatusCode
+            } catch {
+                Write-Host "Could not connect. $($Error[0])"
+            }
+            Start-Sleep -Seconds $SleepSeconds
+        }
     }
 }
 
