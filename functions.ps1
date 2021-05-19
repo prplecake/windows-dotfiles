@@ -101,6 +101,19 @@ function Get-AwsSendStatistics {
 
 }
 
+function Touch-File {
+    Param(
+        [Parameter(Mandatory=$true)]
+        [string]$Path
+    )
+    if (!(Test-Path -Path $Path)) {
+        New-Item -Type File -Path $Path
+    } else {
+        (gci $Path).LastWriteTime = Get-Date
+    }
+}
+Set-Alias -Name touch -Value Touch-File
+
 function Play-StarWarsTheme {
     [console]::beep(440,500)
     [console]::beep(440,500)
