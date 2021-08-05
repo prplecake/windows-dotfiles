@@ -6,6 +6,10 @@ Set-Alias -Name ll -Value ls
 Set-Alias -Name which -Value Get-Command
 Set-Alias -Name ydl -Value youtube-dl
 
+###
+# Functions Aliases
+###
+
 function Open-SublimeTextAndMerge { & smerge $args; & subl $args }
 New-Alias -Name lime -Value Open-SublimeTextAndMerge
 
