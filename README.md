@@ -51,6 +51,26 @@ Specifies the number of seconds to wait before trying again. **Default:
 * **Accept pipeline input:** False
 * **Accept wildcard characters:** False
 
+### Open a URL in all browsers
+
+Currently opens in Firefox, Chrome, Edge, and IE.
+
+```powershell
+Open-InAllBrowsers https://google.com
+```
+
+#### Parameters
+
+`-Uri`
+
+Specifies a URI to open in all browsers.
+
+* **Type:** String
+* **Position:** Named
+* **Default value:** *None*
+* **Accept pipeline input:** False
+* **Accept wildcard characters:** False
+
 ### See why your computer last shutdown/restart
 
 ```powershell

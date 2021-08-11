@@ -182,3 +182,19 @@ function Play-StarWarsTheme {
     [console]::beep(261,125)
     [console]::beep(440,1000)
 }
+
+function Open-InAllBrowsers {
+    Param(
+        [Parameter(Mandatory=$true)]
+        [string]$Uri
+    )
+    $firefox = "C:\Program Files\Mozilla Firefox\firefox.exe"
+    $chrome = "C:\Program Files\Google\Chrome\Application\chrome.exe"
+    $edge = "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
+    $iexplore = "C:\Program Files\Internet Explorer\iexplore.exe"
+
+    & $firefox --new-window $Uri
+    & $chrome --new-window $Uri
+    & $edge --new-window $Uri
+    & $iexplore $Uri
+}
