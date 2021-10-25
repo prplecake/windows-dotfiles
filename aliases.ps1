@@ -3,6 +3,7 @@
 ###
 
 Set-Alias -Name ll -Value ls
+Set-Alias -Name py -Value python
 Set-Alias -Name which -Value Get-Command
 Set-Alias -Name ydl -Value youtube-dl
 
