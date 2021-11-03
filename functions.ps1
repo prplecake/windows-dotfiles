@@ -204,9 +204,9 @@ $orange = "`e[38;5;166m"
 $purple = "`e[38;5;135m"
 
 if ([Security.Principal.WindowsIdentity]::GetCurrent().Groups -contains 'S-1-5-32-544') {
-    $_prompt = "#"
+    $_prompt = '#'
 } else {
-    $_prompt = ">"
+    $_prompt = '>'
 }
 
 # Set prompt
