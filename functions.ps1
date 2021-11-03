@@ -213,5 +213,5 @@ if ([Security.Principal.WindowsIdentity]::GetCurrent().Groups -contains 'S-1-5-3
 Function prompt {
     "`r`n$($purple)$(whoami) `e[0mat $($orange)$(hostname) `e[0min $($limegreen)" `
     + "$((Get-Location).Path -replace ([regex]::Escape($HOME)),'~')" `
-    + "$(Write-VcsStatus)`r`n`e[0mPS$_prompt "
+    + "$(Write-VcsStatus)`r`n`e[0mPS$($_prompt  * ($nestedPromptLevel + 1)) "
 }
