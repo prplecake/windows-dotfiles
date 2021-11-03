@@ -198,3 +198,20 @@ function Open-InAllBrowsers {
     & $edge --new-window $Uri
     & $iexplore $Uri
 }
+
+$limegreen = "`e[38;5;118m"
+$orange = "`e[38;5;166m"
+$purple = "`e[38;5;135m"
+
+if ([Security.Principal.WindowsIdentity]::GetCurrent().Groups -contains 'S-1-5-32-544') {
+    $_prompt = "#"
+} else {
+    $_prompt = ">"
+}
+
+# Set prompt
+Function prompt {
+    "`r`n$($purple)$(whoami) `e[0mat $($orange)$(hostname) `e[0min $($limegreen)" `
+    + "$((Get-Location).Path -replace ([regex]::Escape($HOME)),'~')" `
+    + "$(Write-VcsStatus)`r`n`e[0mPS$_prompt "
+}
