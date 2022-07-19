@@ -12,7 +12,8 @@ Set-Alias -Name ydl -Value youtube-dl
 ###
 
 function Open-SublimeTextAndMerge { & smerge $args; & subl $args }
-New-Alias -Name lime -Value Open-SublimeTextAndMerge
+function Open-SublimeTextAndVSCode { & smerge $args; & code $args }
+New-Alias -Name lime -Value Open-SublimeTextAndVSCode
 
 function Test-HostReachability {
     test-connection $args -Repeat | select @{n='TimeStamp';e={Get-Date}}, Ping, Destination, Address, Latency | ft
