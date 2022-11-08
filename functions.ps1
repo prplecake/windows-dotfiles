@@ -213,3 +213,7 @@ Function prompt {
     + "$((Get-Location).Path -replace ([regex]::Escape($HOME)),'~')" `
     + "$(Write-VcsStatus)`r`n`e[0mPS$($_prompt  * ($nestedPromptLevel + 1)) "
 }
+
+function Edit-PSProfile {
+    code (Split-Path ($PROFILE.CurrentUserCurrentHost))
+}
