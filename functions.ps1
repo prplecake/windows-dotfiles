@@ -1,7 +1,7 @@
 . "$wd\functions\registry_functions.ps1"
 
 function Get-ShutdownReason {
-    $event = Get-WinEvent -LogName 'System' | ?{ $_.ID -eq 1074} | Select -First 1
+    $event = Get-WinEvent -LogName 'System' | ? { $_.ID -eq 1074 } | Select -First 1
     Write-Host "Message:" $event.Message
     Write-Host " Date:" $event.TimeCreated
 }
@@ -12,13 +12,13 @@ function Get-IP {
 
 function Monitor-HttpHost {
     Param(
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [string]$Uri,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [int]$SleepSeconds = 15,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [switch]$Once
     )
 
@@ -26,16 +26,19 @@ function Monitor-HttpHost {
         try {
             $req = Invoke-WebRequest -Uri $Uri -DisableKeepAlive
             Write-Host $req.StatusCode
-        } catch {
+        }
+        catch {
             Write-Host "Could not connect. $($Error[0])"
         }
-    } else {
+    }
+    else {
         Write-Host "Monitoring host $Uri at an internal of $SleepSeconds seconds."
-        while($true){
+        while ($true) {
             try {
                 $req = Invoke-WebRequest -Uri $Uri -DisableKeepAlive
                 Write-Host $req.StatusCode
-            } catch {
+            }
+            catch {
                 Write-Host "Could not connect. $($Error[0])"
             }
             Start-Sleep -Seconds $SleepSeconds
@@ -44,12 +47,12 @@ function Monitor-HttpHost {
 }
 
 function List-EmptyDirs {
-    (gci -r | ?{$_.PSIsContainer -eq $true}) | ?{$_.GetFileSystemInfos().Count -eq 0} | Select FullName
+    (gci -r | ? { $_.PSIsContainer -eq $true }) | ? { $_.GetFileSystemInfos().Count -eq 0 } | Select FullName
 }
 
 function Get-SIDFromName {
     Param(
-        [Parameter(Mandatory=$true,Position=0)]
+        [Parameter(Mandatory = $true, Position = 0)]
         [string]$Name
     )
     $objUser = New-Object System.Security.Principal.NTAccount($Name)
@@ -59,7 +62,7 @@ function Get-SIDFromName {
 
 function Get-NameFromSID {
     Param(
-        [Parameter(Mandatory=$true,Position=0)]
+        [Parameter(Mandatory = $true, Position = 0)]
         [string]$SID
     )
     $objSID = New-Object System.Security.Principal.SecurityIdentifier($SID)
@@ -76,9 +79,9 @@ function Get-AwsSesSendQuota {
     $quotaPercent = $($objQuota.SentLast24Hours / $objQuota.Max24HourSend * 100)
 
     $objReturn = New-Object -TypeName PSObject -Property @{
-        SendingEnabled = $objSendingEnabled.Enabled
+        SendingEnabled  = $objSendingEnabled.Enabled
         SentLast24Hours = $objQuota.SentLast24Hours
-        QuotaUsed = $quotaPercent
+        QuotaUsed       = $quotaPercent
     }
 
     $objReturn
@@ -86,15 +89,16 @@ function Get-AwsSesSendQuota {
 
 function Get-AwsSendStatistics {
     Param(
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [switch]$Sorted
-        )
+    )
 
     $resSendStatistics = $($(aws ses get-send-statistics) | ConvertFrom-Json).SendDataPoints
 
     if ($Sorted) {
         $resSendStatistics | Sort-Object -Property Timestamp | ft
-    } else {
+    }
+    else {
         $resSendStatistics
     }
 
@@ -103,89 +107,90 @@ function Get-AwsSendStatistics {
 
 function Touch-File {
     Param(
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [string]$Path
     )
     if (!(Test-Path -Path $Path)) {
         New-Item -Type File -Path $Path
-    } else {
+    }
+    else {
         (gci $Path).LastWriteTime = Get-Date
     }
 }
 Set-Alias -Name touch -Value Touch-File
 
 function Play-StarWarsTheme {
-    [console]::beep(440,500)
-    [console]::beep(440,500)
-    [console]::beep(440,500)
-    [console]::beep(349,350)
-    [console]::beep(523,150)
-    [console]::beep(440,500)
-    [console]::beep(349,350)
-    [console]::beep(523,150)
-    [console]::beep(440,1000)
-    [console]::beep(659,500)
-    [console]::beep(659,500)
-    [console]::beep(659,500)
-    [console]::beep(698,350)
-    [console]::beep(523,150)
-    [console]::beep(415,500)
-    [console]::beep(349,350)
-    [console]::beep(523,150)
-    [console]::beep(440,1000)
-    [console]::beep(880,500)
-    [console]::beep(440,350)
-    [console]::beep(440,150)
-    [console]::beep(880,500)
-    [console]::beep(830,250)
-    [console]::beep(784,250)
-    [console]::beep(740,125)
-    [console]::beep(698,125)
-    [console]::beep(740,250)
-    [console]::beep(455,250)
-    [console]::beep(622,500)
-    [console]::beep(587,250)
-    [console]::beep(554,250)
-    [console]::beep(523,125)
-    [console]::beep(466,125)
-    [console]::beep(523,250)
-    [console]::beep(349,125)
-    [console]::beep(415,500)
-    [console]::beep(349,375)
-    [console]::beep(440,125)
-    [console]::beep(523,500)
-    [console]::beep(440,375)
-    [console]::beep(523,125)
-    [console]::beep(659,1000)
-    [console]::beep(880,500)
-    [console]::beep(440,350)
-    [console]::beep(440,150)
-    [console]::beep(880,500)
-    [console]::beep(830,250)
-    [console]::beep(784,250)
-    [console]::beep(740,125)
-    [console]::beep(698,125)
-    [console]::beep(740,250)
-    [console]::beep(455,250)
-    [console]::beep(622,500)
-    [console]::beep(587,250)
-    [console]::beep(554,250)
-    [console]::beep(523,125)
-    [console]::beep(466,125)
-    [console]::beep(523,250)
-    [console]::beep(349,250)
-    [console]::beep(415,500)
-    [console]::beep(349,375)
-    [console]::beep(523,125)
-    [console]::beep(440,500)
-    [console]::beep(349,375)
-    [console]::beep(261,125)
-    [console]::beep(440,1000)
+    [console]::beep(440, 500)
+    [console]::beep(440, 500)
+    [console]::beep(440, 500)
+    [console]::beep(349, 350)
+    [console]::beep(523, 150)
+    [console]::beep(440, 500)
+    [console]::beep(349, 350)
+    [console]::beep(523, 150)
+    [console]::beep(440, 1000)
+    [console]::beep(659, 500)
+    [console]::beep(659, 500)
+    [console]::beep(659, 500)
+    [console]::beep(698, 350)
+    [console]::beep(523, 150)
+    [console]::beep(415, 500)
+    [console]::beep(349, 350)
+    [console]::beep(523, 150)
+    [console]::beep(440, 1000)
+    [console]::beep(880, 500)
+    [console]::beep(440, 350)
+    [console]::beep(440, 150)
+    [console]::beep(880, 500)
+    [console]::beep(830, 250)
+    [console]::beep(784, 250)
+    [console]::beep(740, 125)
+    [console]::beep(698, 125)
+    [console]::beep(740, 250)
+    [console]::beep(455, 250)
+    [console]::beep(622, 500)
+    [console]::beep(587, 250)
+    [console]::beep(554, 250)
+    [console]::beep(523, 125)
+    [console]::beep(466, 125)
+    [console]::beep(523, 250)
+    [console]::beep(349, 125)
+    [console]::beep(415, 500)
+    [console]::beep(349, 375)
+    [console]::beep(440, 125)
+    [console]::beep(523, 500)
+    [console]::beep(440, 375)
+    [console]::beep(523, 125)
+    [console]::beep(659, 1000)
+    [console]::beep(880, 500)
+    [console]::beep(440, 350)
+    [console]::beep(440, 150)
+    [console]::beep(880, 500)
+    [console]::beep(830, 250)
+    [console]::beep(784, 250)
+    [console]::beep(740, 125)
+    [console]::beep(698, 125)
+    [console]::beep(740, 250)
+    [console]::beep(455, 250)
+    [console]::beep(622, 500)
+    [console]::beep(587, 250)
+    [console]::beep(554, 250)
+    [console]::beep(523, 125)
+    [console]::beep(466, 125)
+    [console]::beep(523, 250)
+    [console]::beep(349, 250)
+    [console]::beep(415, 500)
+    [console]::beep(349, 375)
+    [console]::beep(523, 125)
+    [console]::beep(440, 500)
+    [console]::beep(349, 375)
+    [console]::beep(261, 125)
+    [console]::beep(440, 1000)
 }
 
 function Open-InAllBrowsers {
     Param(
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [string]$Uri
     )
     $firefox = "C:\Program Files\Mozilla Firefox\firefox.exe"
@@ -203,15 +208,16 @@ $purple = "`e[38;5;135m"
 
 if ([Security.Principal.WindowsIdentity]::GetCurrent().Groups -contains 'S-1-5-32-544') {
     $_prompt = '#'
-} else {
+}
+else {
     $_prompt = '>'
 }
 
 # Set prompt
 Function prompt {
     "`r`n$($purple)$(whoami) `e[0mat $($orange)$(hostname) `e[0min $($limegreen)" `
-    + "$((Get-Location).Path -replace ([regex]::Escape($HOME)),'~')" `
-    + "$(Write-VcsStatus)`r`n`e[0mPS$($_prompt  * ($nestedPromptLevel + 1)) "
+        + "$((Get-Location).Path -replace ([regex]::Escape($HOME)),'~')" `
+        + "$(Write-VcsStatus)`r`n`e[0mPS$($_prompt  * ($nestedPromptLevel + 1)) "
 }
 
 function Edit-PSProfile {
