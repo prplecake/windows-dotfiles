@@ -217,3 +217,21 @@ Function prompt {
 function Edit-PSProfile {
     code (Split-Path ($PROFILE.CurrentUserCurrentHost))
 }
+
+function New-PFXFromCertKey {
+    Param(
+        [Parameter(Mandatory = $true)]
+        [string]$CertificatePath,
+
+        [Parameter(Mandatory = $true)]
+        [string]$CertificateKeyPath
+    )
+
+    $certname = (Get-Item $CertificatePath).BaseName
+    $outDir = (Get-Item $CertificatePath).DirectoryName
+
+    openssl pkcs12 -export `
+        -out "$outDir\$certname.pfx" `
+        -in $CertificatePath `
+        -inkey $CertificateKeyPath
+}
