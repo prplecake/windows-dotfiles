@@ -2,6 +2,14 @@
 
 "dotfiles" for Windows. Plus some other useful things.
 
+## Setup
+
+```powershell
+mkdir (Split-Path $PROFILE.CurrentUserCurrentHost) -ErrorAction SilentlyContinue
+cd (Split-Path $PROFILE.CurrentUserCurrentHost)
+git clone https://github.com/prplecake/windows-dotfiles .
+```
+
 ## Custom Functions
 
 ### Get Public IP Address
