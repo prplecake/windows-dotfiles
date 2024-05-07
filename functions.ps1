@@ -224,6 +224,11 @@ function Edit-PSProfile {
     code (Split-Path ($PROFILE.CurrentUserCurrentHost))
 }
 
+function Add-Path($Path) {
+    $Path = [Environment]::GetEnvironmentVariable("PATH", "Machine") + [IO.Path]::PathSeparator + $Path
+    [Environment]::SetEnvironmentVariable( "Path", $Path, "Machine" )
+}
+
 function New-PFXFromCertKey {
     Param(
         [Parameter(Mandatory = $true)]
