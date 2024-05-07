@@ -241,3 +241,15 @@ function New-PFXFromCertKey {
         -in $CertificatePath `
         -inkey $CertificateKeyPath
 }
+
+function ConvertTo-3cxAudioMessage {
+    Param(
+        [Parameter(Mandatory = $true)]
+        [string]$AudioFile
+    )
+
+    $fileName = (Get-Item $AudioFile).BaseName
+    $outDir = (Get-Item $AudioFile).DirectoryName
+
+    ffmpeg -i $AudioFile -acodec pcm_s16le -ar 8000 -ac 1 "$outDir\$fileName.wav"
+}
