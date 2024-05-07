@@ -258,3 +258,11 @@ function ConvertTo-3cxAudioMessage {
 
     ffmpeg -i $AudioFile -acodec pcm_s16le -ar 8000 -ac 1 "$outDir\$fileName.wav"
 }
+
+function Remove-AppLauncherDrives {
+    $driveLetters = @("L", "S", "P")
+    foreach($driveLetter in $driveLetters){
+        Write-Output "Removing drive $driveLetter"
+        net use "${driveLetter}:" /delete 2> $null
+    }
+}
