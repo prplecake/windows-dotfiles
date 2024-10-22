@@ -1,4 +1,4 @@
-. "$wd\functions\registry_functions.ps1"
+Get-ChildItem -Filter '*.ps1' -Path "$wd\functions" | ForEach-Object { . $_.FullName }
 
 function Get-ShutdownReason {
     $event = Get-WinEvent -LogName 'System' | ? { $_.ID -eq 1074 } | Select -First 1
